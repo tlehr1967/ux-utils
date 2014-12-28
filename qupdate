@@ -16,7 +16,7 @@ case $distro in
            test -f ${OVERRIDE_FILE} && chmod 444 ${OVERRIDE_FILE}
 	   apt-get -y upgrade
            test -f ${OVERRIDE_FILE} && chmod 755 ${OVERRIDE_FILE}
-           apt-get autoremove
+           apt-get -y autoremove
 	   ;;
    CentOS) yum -y update ;;
 esac
