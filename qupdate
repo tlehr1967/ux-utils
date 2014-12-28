@@ -1,0 +1,23 @@
+#!/bin/ksh
+
+#
+# determine distribution
+#
+if [ -x /usr/bin/lsb_release ] ; then
+   distro=`lsb_release -a | grep -i "Distributor Id" | awk -F" " '{print $3}'`
+fi
+
+OVERRIDE_FILE=/etc/kernel/postinst.d/statoverride
+
+echo "Detected $distro Distribution"
+
+case $distro in
+   Ubuntu) apt-get update
+           test -f ${OVERRIDE_FILE} && chmod 444 ${OVERRIDE_FILE}
+	   apt-get -y upgrade
+           test -f ${OVERRIDE_FILE} && chmod 755 ${OVERRIDE_FILE}
+           apt-get autoremove
+	   ;;
+   CentOS) yum -y update ;;
+esac
+
